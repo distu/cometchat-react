@@ -1,52 +1,89 @@
-<p align="center">
-  <img alt="CometChat" src="https://assets.cometchat.io/website/images/logos/banner.png">
-</p>
+# Cometchat em React
 
-# React Sample App by CometChat
+## O README atual contém
 
-This is a reference application showcasing the integration of [CometChat's React UI Kit](https://www.cometchat.com/docs/ui-kit/react/v6/overview) within a React framework. It provides developers with examples of implementing real-time messaging and voice and video calling features in their own React-based applications.
+- Logo da CometChat
+- Descrição do UI Kit da CometChat para React
+- Link para o Sample App
+- Pré-requisitos
+- Instruções para começar (que mencionam o Dashboard da CometChat)
+- Links para documentação e suporte
 
-<div style="display: flex; align-items: center; justify-content: center">
-   <img src="../screenshots/sample_app_overview.png" />
-</div>
+## Vou substituir isso com
 
-## Prerequisites
+- Título genérico sobre o chat UI kit para React
+- Breve descrição da funcionalidade
+- Pré-requisitos técnicos (manterei os mesmos)
+- Instruções simples para instalação e execução
+- Comandos básicos
 
-- Ensure that you have Node.js and npm installed:
+## Chat UI Kit para React
 
-  ```sh
-    npm install npm@latest -g
-  ```
+Este é um kit de interface de usuário React que fornece componentes pré-construídos para implementar rapidamente recursos de chat em sua aplicação.
 
-- Sign up for a [CometChat](https://app.cometchat.com/) account to get your app credentials: _`App ID`_, _`Region`_, and _`Auth Key`_
+## Funcionalidades
 
-## Installation
+- Interface de chat completa e responsiva
+- Suporte para mensagens de texto, mídia e arquivos
+- Gerenciamento de usuários e grupos
+- Chamadas de áudio e vídeo
+- Personalização de temas e componentes
 
-1. Clone the repository:
-   ```sh
-     git clone https://github.com/cometchat/cometchat-uikit-react.git
-   ```
+## Pré-requisitos
 
-2. Checkout v6 branch:
-   ```sh
-     git checkout v6
-   ```
+- Node.js >= 14.17.0
+- npm >= 7
 
-3. Navigate to the cloned directory:
-   ```sh
-     cd cometchat-uikit-react/sample-app
-   ```
-4. Install dependencies:
-   ```sh
-     npm install
-   ```
-5. `[Optional]` Enter your CometChat _`App ID`_, _`Region`_, and _`Auth Key`_ in the [sample-app/src/AppConstants.ts](https://github.com/cometchat/cometchat-sample-app-react/blob/v6/sample-app/src/AppConstants.ts) file:https://github.com/cometchat/cometchat-uikit-react/blob/2dba5e2e781db6d2f20c59803ff7f8cef4e7c187/sample-app/src/AppConstants.ts#L1-L5
+## Instalação
 
-6. Run the project locally to see all CometChat features in action:
-   ```
-     npm start
-   ```
+```bash
+# Clone o repositório
+git clone [url-do-repositório]
+cd [nome-da-pasta]
 
-## Help and Support
+# Instale as dependências
+npm install
 
-For issues running the project or integrating with our UI Kits, consult our [documentation](https://www.cometchat.com/docs/ui-kit/react/v6/integration) or create a [support ticket](https://help.cometchat.com/hc/en-us) or seek real-time support via the [CometChat Dashboard](http://app.cometchat.com/).
+# Configure as variáveis de ambiente
+# Crie um arquivo .env na raiz do projeto com suas credenciais
+```
+
+## Executando a aplicação
+
+```bash
+# Inicie o servidor de desenvolvimento
+npm start
+
+# Para criar uma build de produção
+npm run build
+
+# Para executar os testes
+npm test
+```
+
+## Estrutura do projeto
+
+O projeto segue uma estrutura de componentes reutilizáveis que podem ser facilmente integrados em qualquer aplicação React existente.
+
+```plaintext
+src/
+  ├── components/     # Componentes de UI reutilizáveis
+  ├── containers/     # Componentes de contêiner para lógica
+  ├── context/        # Contextos React
+  ├── hooks/          # Custom hooks
+  ├── utils/          # Utilitários e funções auxiliares
+  └── App.js          # Componente principal
+```
+
+## Personalização
+
+Você pode personalizar a aparência e o comportamento dos componentes modificando os arquivos de tema localizados na pasta `src/theme`.
+
+## Solução de problemas
+
+Se você encontrar problemas durante a execução do projeto, verifique as seguintes soluções comuns:
+
+- Certifique-se de que todas as dependências estão instaladas
+- Verifique se as variáveis de ambiente estão configuradas corretamente
+- Limpe o cache: `npm cache clean --force`
+- Reinstale os módulos: `rm -rf node_modules && npm install`
