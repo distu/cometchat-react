@@ -90,9 +90,5 @@
   "license": "SEE LICENSE IN LICENSE.md",
   "bugs": {
     "url": "https://help.cometchat.com/hc/en-us"
-  },
-  "engines": {
-    "node": "18.x",
-    "npm": "11.2.0"
   }
 }
