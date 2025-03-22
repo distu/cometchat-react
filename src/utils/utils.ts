@@ -59,5 +59,5 @@ export function setupLocalization(language?:string){
       "tr": turkish,
       }
     CometChatLocalize.addTranslation(resourcesJson);
-    CometChatLocalize.setCurrentLanguage(language ?? "en-US");
+    CometChatLocalize.setCurrentLanguage(language ?? "pt");
   }

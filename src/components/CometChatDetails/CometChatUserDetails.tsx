@@ -39,7 +39,7 @@ export const CometChatUserDetails = (props: UserDetailProps) => {
                 </div>
                 <div>
                     <div className="cometchat-user-details__content-title">
-                        {user.getName()}
+                        {user.getName() + " (" + user.getRole() + ")"}
                     </div>
                     {showStatus && <div className="cometchat-user-details__content-description">
                         {getLocalizedString(`message_header_status_${user.getStatus?.().toLowerCase()}`)}

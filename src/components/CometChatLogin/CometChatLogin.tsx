@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "../../styles//CometChatLogin/CometChatLogin.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import cometChatLogo from "../../assets/cometchat_logo.svg"
 import cometChatLogoDark from "../../assets/cometchat_logo_dark.svg";
 import { CometChatUIKit, CometChatUIKitLoginListener } from "@cometchat/chat-uikit-react";
 import { COMETCHAT_CONSTANTS } from "../../AppConstants";
 import { sampleUsers } from "./sampledata";
+import { jwtDecode } from "jwt-decode";
 
 type User = {
   name: string;
@@ -22,7 +23,9 @@ const CometChatLogin = () => {
   const [uid, setUid] = useState("");
   const [selectedUid, setSelectedUid] = useState("");
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const isDarkMode = document.querySelector('[data-theme="dark"]') ? true : false;
+  const ACCESS_KEY = "f9mmlgebXCcYnDmVVydTXvRlKe2xprhT";
 
   function hasCredentials() {
     const appID: string = localStorage.getItem('appId') || COMETCHAT_CONSTANTS.APP_ID; // Use the latest appId if available
@@ -34,14 +37,30 @@ const CometChatLogin = () => {
   }
 
   useEffect(() => {
+    // Verifica se há um token na URL
+    const tokenFromUrl = searchParams.get('token');
+    console.log("tokenFromUrl", tokenFromUrl);
+    
     if (CometChatUIKitLoginListener.getLoggedInUser()) {
       navigate('/home', { replace: true });
-    }
-    
-    if (!hasCredentials()) {
+    } else if (tokenFromUrl) {
+      // Se tiver um token na URL, decodifica e faz login automaticamente
+      try {
+        const decodedToken = jwtDecode(tokenFromUrl) as { userId: string, companyId: string, sessionId: string };
+        console.log("Decoded token:", decodedToken);
+        
+        if (decodedToken.userId) {
+          login(decodedToken.userId);
+        } else {
+          console.error("Token não contém userId");
+        }
+      } catch (error) {
+        console.error("Erro ao decodificar o token:", error);
+      }
+    } else if (!hasCredentials()) {
       navigate('/credentials');
     }
-  }, [hasCredentials]);
+  }, []);
 
   useEffect(() => {
     fetchDefaultUsers();
@@ -128,72 +147,74 @@ const CometChatLogin = () => {
     navigate('/credentials');
   }
 
-  return (
-    <div
-      className="cometchat-login__container"
-    >
-      <div className="cometchat-login__logo">
-        {isDarkMode ? <img src={cometChatLogoDark} alt='' /> : <img src={cometChatLogo} alt='' />}
-      </div>
-      <div className='cometchat-login__content'>
+  return(<br/>);
 
-        <div className='cometchat-login__header'>
+  // return (
+  //   <div
+  //     className="cometchat-login__container"
+  //   >
+  //     <div className="cometchat-login__logo">
+  //       {isDarkMode ? <img src={cometChatLogoDark} alt='' /> : <img src={cometChatLogo} alt='' />}
+  //     </div>
+  //     <div className='cometchat-login__content'>
 
-          <div className='cometchat-login__title'>Sign in to cometchat</div>
-          <div className='cometchat-login__sample-users'>
-            <div className='cometchat-login__sample-users-title'>
-              Using our sample users
-            </div>
-            <div className='cometchat-login__user-list'>
-              {defaultUsers.map(getUserBtnWithKeyAdded)}
-            </div>
-          </div>
-        </div>
+  //       <div className='cometchat-login__header'>
 
-        <div className='cometchat-login__divider-section' style={{ display: "flex" }}>
-          <div className='cometchat-login__divider' />
-          <span className="cometchat-login__divider-text"> Or</span>
+  //         <div className='cometchat-login__title'>Sign in to cometchat</div>
+  //         <div className='cometchat-login__sample-users'>
+  //           <div className='cometchat-login__sample-users-title'>
+  //             Using our sample users
+  //           </div>
+  //           <div className='cometchat-login__user-list'>
+  //             {defaultUsers.map(getUserBtnWithKeyAdded)}
+  //           </div>
+  //         </div>
+  //       </div>
 
-          <div className='cometchat-login__divider' />
-        </div>
+  //       <div className='cometchat-login__divider-section' style={{ display: "flex" }}>
+  //         <div className='cometchat-login__divider' />
+  //         <span className="cometchat-login__divider-text"> Or</span>
 
-        <div className='cometchat-login__custom-login'>
-          <form
-            onSubmit={handleLoginWithUidFormSubmit}
-            className='cometchat-login__form'
-          >
-            <div
-              className="cometchat-login__input-group"
-            >
-              <label
+  //         <div className='cometchat-login__divider' />
+  //       </div>
 
-                className='input-label cometchat-login__input-label' htmlFor=''>
-                Your UID
-              </label>
-              <input
-                className='cometchat-login__input'
-                type='text'
-                value={uid}
-                onChange={(e) => {
-                  setUid(e.target.value);
-                }}
-                required
-                placeholder='Enter your UID'
-              />
-            </div>
+  //       <div className='cometchat-login__custom-login'>
+  //         <form
+  //           onSubmit={handleLoginWithUidFormSubmit}
+  //           className='cometchat-login__form'
+  //         >
+  //           <div
+  //             className="cometchat-login__input-group"
+  //           >
+  //             <label
 
-            <button
-              className='cometchat-login__submit-button'
-            >
-              Login
-            </button>
-            <div className="cometchat-login__note">
-              Change <span className="cometchat-login__note-link" onClick={handleChangeCredentials}>App Credentials</span></div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
+  //               className='input-label cometchat-login__input-label' htmlFor=''>
+  //               Your UID
+  //             </label>
+  //             <input
+  //               className='cometchat-login__input'
+  //               type='text'
+  //               value={uid}
+  //               onChange={(e) => {
+  //                 setUid(e.target.value);
+  //               }}
+  //               required
+  //               placeholder='Enter your UID'
+  //             />
+  //           </div>
+
+  //           <button
+  //             className='cometchat-login__submit-button'
+  //           >
+  //             Login
+  //           </button>
+  //           <div className="cometchat-login__note">
+  //             Change <span className="cometchat-login__note-link" onClick={handleChangeCredentials}>App Credentials</span></div>
+  //         </form>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
 };
 
 export default CometChatLogin;
